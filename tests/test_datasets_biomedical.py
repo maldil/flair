@@ -1,6 +1,7 @@
 import inspect
 import os
 import tempfile
+import numpy as np
 from operator import itemgetter
 from pathlib import Path
 from typing import Callable, List, Type
@@ -288,7 +289,7 @@ def test_sanity_not_too_many_entities(CorpusType: Type[ColumnCorpus]):
     for sentence in _iter_dataset(corpus.get_all_sentences()):
         entities = sentence.get_spans("ner")
         n_entities_per_sentence.append(len(entities))
-    avg_entities_per_sentence = sum(n_entities_per_sentence) / len(n_entities_per_sentence)
+    avg_entities_per_sentence = np.mean(n_entities_per_sentence)
 
     assert avg_entities_per_sentence <= 5
 
