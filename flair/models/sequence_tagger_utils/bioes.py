@@ -1,5 +1,6 @@
 from collections import defaultdict
 from typing import Dict
+import numpy as np
 
 
 def get_spans_from_bio(bioes_tags, bioes_scores=None):
@@ -39,7 +40,7 @@ def get_spans_from_bio(bioes_tags, bioes_scores=None):
         # if an existing span is ended (either by reaching O or starting a new span)
         if (starts_new_span or not in_span) and len(current_span) > 0:
             # determine score and value
-            span_score = sum(current_span_scores) / len(current_span_scores)
+            span_score = np.mean(current_span_scores)
             span_value = sorted(current_tag_weights.items(), key=lambda k_v: k_v[1], reverse=True)[0][0]
 
             # append to result list
